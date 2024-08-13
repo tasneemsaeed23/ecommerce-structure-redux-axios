@@ -7,18 +7,34 @@ import labtop from "../../images/labtop.png";
 import sale from "../../images/sale.png";
 import pic from "../../images/pic.png";
 import SubTiltle from "../Uitlity/SubTiltle";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import getAllCategory from "../../redux/actions/categoryAction";
 
 const HomeCategory = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllCategory());
+  }, []);
+
+  const category = useSelector((state) => state.allCategory.category);
+  const loading = useSelector((state) => state.allCategory.loading);
+
+  console.log(category);
+  console.log(loading);
+
   return (
     <Container>
       <SubTiltle title="التصنيفات" btntitle="المزيد" pathText="/allcategory" />
       <Row className="my-2 d-flex justify-content-between">
-        <CategoryCard title="اجهزة منزلية" img={clothe} background="#F4DBA4" />
-        <CategoryCard title="اجهزة منزلية" img={cat2} background="#F4DBA4" />
-        <CategoryCard title="اجهزة منزلية" img={labtop} background="#0034FF" />
-        <CategoryCard title="اجهزة منزلية" img={sale} background="#F4DBA4" />
-        <CategoryCard title="اجهزة منزلية" img={clothe} background="#FF6262" />
-        <CategoryCard title="اجهزة منزلية" img={pic} background="#F4DBA4" />
+        {category.data ? (
+          <CategoryCard
+            title={category.data[0].name}
+            img={category.data[0].image}
+            background="#F4DBA4"
+          />
+        ) : null}
       </Row>
     </Container>
   );
