@@ -2,6 +2,7 @@ import React from "react";
 import ProductCard from "./ProductCard";
 import SubTiltle from "../Uitlity/SubTiltle";
 import { Container, Row } from "react-bootstrap";
+
 const CardProductContainer = ({ title, btntitle, pathText }) => {
   return (
     <Container>
