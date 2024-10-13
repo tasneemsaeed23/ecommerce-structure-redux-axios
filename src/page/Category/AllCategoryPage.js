@@ -12,7 +12,7 @@ const AllCategoryPage = () => {
 
   // Fetch categories when the component mounts (initial load)
   useEffect(() => {
-    dispatch(getAllCategory(3)); // Get the categories for the first page (3 categories per page, for example)
+    dispatch(getAllCategory(6)); // Get the categories for the first page (3 categories per page, for example)
   }, [dispatch]);
 
   // Retrieve the category data and loading state from the Redux store
