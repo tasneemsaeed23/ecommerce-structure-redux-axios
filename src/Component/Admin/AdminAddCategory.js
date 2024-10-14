@@ -3,8 +3,9 @@ import { Col, Row, Spinner } from "react-bootstrap";
 import avatar from "../../images/avatar.png";
 import { creatCategory } from "../../redux/actions/categoryAction";
 import { useSelector, useDispatch } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import notify from "../../hook/useNotifaction";
 
 const AdminAddCategory = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const AdminAddCategory = () => {
 
     // Check if fields are empty
     if (Name === "" || !selectedFile) {
-      toast.error("يرجى ملء جميع الحقول");
+      notify("يرجى ملء جميع الحقول", "warn");
       return;
     }
 
@@ -52,8 +53,10 @@ const AdminAddCategory = () => {
       setSelectedFile("");
       setLoading(false);
       setTimeout(() => setIspress(false), 3000);
-      if (res) {
-        toast.success("تم إضافة التصنيف بنجاح");
+      if (res.status === 201) {
+        notify("تم إضافة التصنيف بنجاح", "success");
+      } else {
+        notify("هناك مشكلة في عملية الاضافة", "error");
       }
     }
   }, [loading, res]);
