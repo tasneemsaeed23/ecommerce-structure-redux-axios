@@ -23,6 +23,10 @@ const AdminAddCategory = () => {
   //save data in database
   const handelSubmit = async (event) => {
     event.preventDefault();
+    if (Name === "" || selectedFile === null) {
+      alert("Please fill all the fields");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("name", Name);
