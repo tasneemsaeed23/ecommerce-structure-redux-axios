@@ -3,6 +3,8 @@ import { Col, Row, Spinner } from "react-bootstrap";
 import avatar from "../../images/avatar.png";
 import { creatCategory } from "../../redux/actions/categoryAction";
 import { useSelector, useDispatch } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminAddCategory = () => {
   const dispatch = useDispatch();
@@ -20,11 +22,15 @@ const AdminAddCategory = () => {
     }
   };
 
-  //save data in database
+  const res = useSelector((state) => state.allCategory.category);
+
+  // Save data in the database
   const handelSubmit = async (event) => {
     event.preventDefault();
-    if (Name === "" || selectedFile === null) {
-      alert("Please fill all the fields");
+
+    // Check if fields are empty
+    if (Name === "" || !selectedFile) {
+      toast.error("يرجى ملء جميع الحقول");
       return;
     }
 
@@ -35,6 +41,7 @@ const AdminAddCategory = () => {
     setLoading(true);
     setIspress(true);
     await dispatch(creatCategory(formData));
+
     setLoading(false);
   };
 
@@ -45,8 +52,11 @@ const AdminAddCategory = () => {
       setSelectedFile("");
       setLoading(false);
       setTimeout(() => setIspress(false), 3000);
+      if (res) {
+        toast.success("تم إضافة التصنيف بنجاح");
+      }
     }
-  }, [loading]);
+  }, [loading, res]);
 
   return (
     <div>
@@ -94,6 +104,8 @@ const AdminAddCategory = () => {
           <h4>تم الانتهاء</h4>
         )
       ) : null}
+
+      <ToastContainer />
     </div>
   );
 };
