@@ -1,23 +1,31 @@
 import React from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Spinner } from "react-bootstrap";
 import SubTiltle from "../Uitlity/SubTiltle";
 import BrandCard from "./BrandCard";
-import brand1 from "../../images/brand1.png";
-import brand2 from "../../images/brand2.png";
-import brand3 from "../../images/brand3.png";
+import HomeBrandHook from "../../hook/brand/home-brand-hook";
 
 const BrandFeatured = ({ title, btntitle }) => {
+  const [loading, brand] = HomeBrandHook();
   return (
     <Container>
-      <SubTiltle title={title} btntitle={btntitle} pathText="/allbrand" />
-      <Row className="my-1 d-flex justify-content-between">
-        <BrandCard img={brand1} />
-        <BrandCard img={brand2} />
-        <BrandCard img={brand3} />
-        <BrandCard img={brand2} />
-        <BrandCard img={brand1} />
-        <BrandCard img={brand3} />
-      </Row>
+      {brand.data.length > 0 ? (
+        <div>
+          <SubTiltle title={title} btntitle={btntitle} pathText="/allbrand" />
+          <Row className="my-1 d-flex justify-content-between">
+            {loading === false ? (
+              brand.data ? (
+                brand.data.slice(0, 4).map((item, index) => {
+                  return <BrandCard key={index} img={item.image} />;
+                })
+              ) : (
+                <h4>لا يوجد ماركات</h4>
+              )
+            ) : (
+              <Spinner animation="border" variant="warning" />
+            )}
+          </Row>
+        </div>
+      ) : null}
     </Container>
   );
 };
