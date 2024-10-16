@@ -2,9 +2,10 @@ import baseURL from "../API/baseURL";
 
 const useInsertDataWithImage = async (url, parmas) => {
   const config = {
-    headers: { "content-type": "multipart/form-data" },
+    headers: { "Content-Type": "multipart/form-data" },
   };
   const res = await baseURL.post(url, parmas, config);
+  console.log(res.status);
   return res;
 };
 

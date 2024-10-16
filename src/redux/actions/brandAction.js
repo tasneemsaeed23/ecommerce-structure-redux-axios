@@ -34,7 +34,7 @@ export const getAllBrandPage = (page) => async (dispatch) => {
 };
 
 //insert  brand with pagination
-export const creatBrand = (formData) => async (dispatch) => {
+export const createBrand = (formData) => async (dispatch) => {
   try {
     const response = await useInsertDataWithImage(`/api/v1/brands`, formData);
     dispatch({
@@ -45,7 +45,7 @@ export const creatBrand = (formData) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: GET_ERROR,
-      payload: `Error: ${e.message}`,
+      payload: "Error " + e,
     });
   }
 };
