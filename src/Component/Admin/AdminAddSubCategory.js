@@ -16,6 +16,7 @@ const AdminAddSubCategory = () => {
   const [loading, setLoading] = useState(true);
 
   const category = useSelector((state) => state.allCategory.category);
+  const subcategory = useSelector((state) => state.subCategory.subcategory);
 
   if (category) console.log(category.data);
 
@@ -48,6 +49,17 @@ const AdminAddSubCategory = () => {
     if (loading === false) {
       setName("");
       setId("0");
+      if (subcategory) console.log(subcategory);
+      if (subcategory.status === 201) {
+        notify("تم اضافه التصنيف بنجاح", "success");
+      } else if (
+        subcategory === "Error Error: Request failed with status code 400"
+      ) {
+        notify("هذا الاسم مكرر من فضلك اختر اسم اخر", "warn");
+      } else {
+        notify("هناك مشكلة في عمليه الاضافة", "warn");
+      }
+      setLoading(true);
     }
   }, [loading]);
   return (
