@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import Multiselect from "multiselect-react-dropdown";
 import avatar from "../../images/avatar.png";
 import add from "../../images/add.png";
+import MultiImageInput from "react-multiple-image-input";
+
 const AdminAddProducts = () => {
   const onSelect = () => {};
   const onRemove = () => {};
@@ -11,6 +13,19 @@ const AdminAddProducts = () => {
     { name: "التصنيف الاول", id: 1 },
     { name: "التصنيف الثاني", id: 2 },
   ];
+  //values images products
+  const [images, setImages] = useState([]);
+
+  //values state
+  const [prodName, setprodName] = useState("");
+  const [prodDescription, setprodDescription] = useState("");
+  const [priceBefore, setpriceBefore] = useState("السعر قبل الخصم");
+  const [priceAftr, setpriceAftr] = useState("السعر بعد الخصم");
+  const [qty, setQty] = useState("الكمية المتاحة");
+  const [catID, setCatID] = useState("");
+  const [BrandID, setBrandID] = useState("");
+  const [subCatID, setSubCatID] = useState([]);
+  const [selectedSubID, setselectedSubID] = useState([]);
 
   return (
     <div>
@@ -18,13 +33,22 @@ const AdminAddProducts = () => {
         <div className="admin-content-text pb-4"> اضافه منتج جديد</div>
         <Col sm="8">
           <div className="text-form pb-2"> صور للمنتج</div>
-          <img src={avatar} alt="" height="100px" width="120px" />
+
+          <MultiImageInput images={images} setImages={setImages} />
+
           <input
+            value={prodName}
+            onChange={(e) => setprodName(e.target.value)}
             type="text"
             className="input-form d-block mt-3 px-3"
             placeholder="اسم المنتج"
+            them={"light"}
+            allowCrop={false}
+            max={4}
           />
           <textarea
+            value={prodDescription}
+            onChange={(e) => setprodDescription(e.target.value)}
             className="input-form-area p-2 mt-3"
             rows="4"
             cols="50"
@@ -34,11 +58,22 @@ const AdminAddProducts = () => {
             type="number"
             className="input-form d-block mt-3 px-3"
             placeholder="السعر قبل الخصم"
+            value={priceBefore}
+            onChange={(e) => setpriceBefore(e.target.value)}
           />
           <input
             type="number"
             className="input-form d-block mt-3 px-3"
-            placeholder="سعر المنتج"
+            placeholder="سعر بعد الخصم"
+            value={priceAftr}
+            onChange={(e) => setpriceAftr(e.target.value)}
+          />
+          <input
+            type="number"
+            className="input-form d-block mt-3 px-3"
+            placeholder=" الكمية المتاحة"
+            value={qty}
+            onChange={(e) => setQty(e.target.value)}
           />
           <select
             name="languages"
