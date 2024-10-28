@@ -7,7 +7,7 @@ import mobile2 from "../../images/mobile2.png";
 import LeftButton from "./LeftButton";
 import RightButton from "./RightButton";
 
-const ProductGallery = () => {
+const ProductGallery = ({ id }) => {
   const images = [
     {
       original: `${mobile}`,
