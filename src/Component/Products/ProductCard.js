@@ -19,7 +19,7 @@ const ProductCard = ({ item }) => {
           boxShadow: "0 2px 2px 0 rgba(151,151,151,0.5)",
         }}
       >
-        <Link to="/products/:id" style={{ textDecoration: "none" }}>
+        <Link to={`/products/${item._id}`} style={{ textDecoration: "none" }}>
           <Card.Img
             style={{ height: "228px", width: "100%" }}
             src={item.imageCover}
