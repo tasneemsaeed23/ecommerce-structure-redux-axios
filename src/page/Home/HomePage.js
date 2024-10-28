@@ -7,18 +7,20 @@ import BrandFeatured from "./../../Component/Brand/BrandFeatured";
 import ViewHomeProductsHook from "../../hook/products/view-home-products-hook";
 
 const HomePage = () => {
-  const [allProducts] = ViewHomeProductsHook();
+  const [items] = ViewHomeProductsHook();
   return (
     <div className="font" style={{ minHeight: "670px" }}>
       <Silder />
       <HomeCategory />
       <CardProductContainer
+        products={items}
         title="الاكثر مبيعا"
         btntitle="المزيد"
         pathText="/products"
       />
       <DiscountSection />
       <CardProductContainer
+        products={items}
         title=" احدث الازياء"
         btntitle="المزيد"
         pathText="/products"
