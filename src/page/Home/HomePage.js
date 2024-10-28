@@ -4,8 +4,10 @@ import HomeCategory from "../../Component/Home/HomeCategory";
 import CardProductContainer from "./../../Component/Products/CardProductContainer";
 import DiscountSection from "../../Component/Home/DiscountSection";
 import BrandFeatured from "./../../Component/Brand/BrandFeatured";
+import ViewHomeProductsHook from "../../hook/products/view-home-products-hook";
 
 const HomePage = () => {
+  const [allProducts] = ViewHomeProductsHook();
   return (
     <div className="font" style={{ minHeight: "670px" }}>
       <Silder />
