@@ -3,10 +3,12 @@ import {
   GET_ERROR,
   CREATE_CATEGORY,
   GET_PRODUCT_DETALIS,
+  GET_ONE_CATEGORY,
 } from "../type";
 
 const inital = {
   category: [],
+  oneCategory: [],
   loading: true,
 };
 
@@ -16,6 +18,11 @@ const categoryReducer = (state = inital, action) => {
       return {
         ...state,
         category: action.payload,
+        loading: false,
+      };
+    case GET_ONE_CATEGORY:
+      return {
+        oneCategory: action.payload,
         loading: false,
       };
     case CREATE_CATEGORY:
