@@ -1,17 +1,21 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import ViewProductsDetalisHook from "../../hook/products/view-products-detalis-hook";
 
-const ProductText = ({ id }) => {
+const ProductText = () => {
+  const { id } = useParams();
+  const [item, images, cat] = ViewProductsDetalisHook(id);
   return (
     <div>
       <Row className="mt-2">
-        <div className="cat-text">الالكترونيات :</div>
+        <div className="cat-text">{cat.name} :</div>
       </Row>
       <Row>
         <Col md="8">
           <div className="cat-title d-inline">
-            آيفون XR بذاكرة سعة 128 جيجابايت ويدعم تقنية 4G LTE مع تطبيق فيس
-            تايم (برودكت) أحمر <div className="cat-rate d-inline mx-3">4.5</div>
+            {item.title}
+            <div className="cat-rate d-inline mx-3">{item.ratingsQuantity}</div>
           </div>
         </Col>
       </Row>
