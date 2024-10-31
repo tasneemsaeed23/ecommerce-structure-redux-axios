@@ -5,6 +5,7 @@ import {
   GET_ERROR,
   GET_ALL_PRODUCTS,
   GET_PRODUCT_DETALIS,
+  GET_PRODUCT_LIKE,
 } from "../type";
 
 //create Product with pagination
@@ -69,6 +70,23 @@ export const getAllProductsPage = (page, limit) => async (dispatch) => {
     );
     dispatch({
       type: GET_ALL_PRODUCTS,
+      payload: response,
+      loading: true,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_ERROR,
+      payload: "Error " + e,
+    });
+  }
+};
+
+//get one product with id
+export const getProductLike = (id) => async (dispatch) => {
+  try {
+    const response = await useGetData(`/api/v1/products?category=${id}`);
+    dispatch({
+      type: GET_PRODUCT_LIKE,
       payload: response,
       loading: true,
     });
