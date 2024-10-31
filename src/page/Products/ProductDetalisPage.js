@@ -10,13 +10,15 @@ import { useParams } from "react-router-dom";
 const ProductDetalisPage = () => {
   const { id } = useParams();
   const [item, cat, images, brand, prod] = ViewProductsDetalisHook(id);
+
+  if (prod) var items = prod.slice(0, 4);
   return (
     <div style={{ minHeight: "670px" }}>
       <CategoryHeader />
       <Container>
         <ProductDetails />
         <RateContainer />
-        <CardProductContainer title="منتجات قد تعجبك" />
+        <CardProductContainer products={items} title="منتجات قد تعجبك" />
       </Container>
     </div>
   );
