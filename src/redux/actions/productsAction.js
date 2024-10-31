@@ -1,3 +1,4 @@
+import useDeleteData from "../../hooks/useDeleteData";
 import useGetData from "../../hooks/useGetData";
 import { useInsertDataWithImage } from "../../hooks/useInsertData";
 import {
@@ -6,6 +7,7 @@ import {
   GET_ALL_PRODUCTS,
   GET_PRODUCT_DETALIS,
   GET_PRODUCT_LIKE,
+  DELETE_PRODUCTS,
 } from "../type";
 
 //create Product with pagination
@@ -65,9 +67,7 @@ export const getOneProduct = (id) => async (dispatch) => {
 //get all products with pagination with pages number
 export const getAllProductsPage = (page, limit) => async (dispatch) => {
   try {
-    const response = await useGetData(
-      `/api/v1/products?page=${page}&limit=${limit}`
-    );
+    const response = await useGetData(`/api/v1/products?limit=${limit}`);
     dispatch({
       type: GET_ALL_PRODUCTS,
       payload: response,
@@ -87,6 +87,23 @@ export const getProductLike = (id) => async (dispatch) => {
     const response = await useGetData(`/api/v1/products?category=${id}`);
     dispatch({
       type: GET_PRODUCT_LIKE,
+      payload: response,
+      loading: true,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_ERROR,
+      payload: "Error " + e,
+    });
+  }
+};
+
+//delete product with id
+export const deleteProducts = (id) => async (dispatch) => {
+  try {
+    const response = await useDeleteData(`/api/v1/products/${id}`);
+    dispatch({
+      type: DELETE_PRODUCTS,
       payload: response,
       loading: true,
     });
