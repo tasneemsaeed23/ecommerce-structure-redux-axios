@@ -8,7 +8,7 @@ import ViewProductsDetalisHook from "../../hook/products/view-products-detalis-h
 
 const ProductGallery = () => {
   const { id } = useParams();
-  const [item, images] = ViewProductsDetalisHook(id);
+  const [item, images, cat] = ViewProductsDetalisHook(id);
 
   return (
     <div
