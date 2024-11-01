@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../../redux/actions/productsAction";
+import { getAllProducts, getAllProductsPage } from "../../redux/actions/productsAction";
 
 const viewProductAdminHook = () => {
   const dispatch = useDispatch();
@@ -8,6 +8,10 @@ const viewProductAdminHook = () => {
   useEffect(() => {
     dispatch(getAllProducts());
   }, []);
+
+  const onPress = async (page) => {
+    await dispatch(getAllProductsPage(page, 10));
+  };
 
   const allProducts = useSelector((state) => state.allproducts.allProducts);
 
@@ -17,11 +21,11 @@ const viewProductAdminHook = () => {
 
   let pagination = [];
   if (allProducts.paginationResult)
-    pagination = pagination.paginationResult;        ;
+    pagination = allProducts.paginationResult;        ;
   else 
   pagination = [];
 
-  return [items, pagination];
+  return [items, pagination, onPress];
 };
 
 export default viewProductAdminHook;
