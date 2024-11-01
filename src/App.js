@@ -23,6 +23,7 @@ import UserAllAddresPage from "./page/User/UserAllAddresPage";
 import UserAddAddressPage from "./page/User/UserAddAddressPage";
 import UserEditAddressPage from "./page/User/UserEditAddressPage";
 import UserProfilePage from "./page/User/UserProfilePage";
+import AdminEditProductPage from "./page/Admin/AdminEditProductPage";
 function App() {
   return (
     <div className="font">
@@ -59,6 +60,10 @@ function App() {
           <Route path="/user/add-address" element={<UserAddAddressPage />} />
           <Route path="/user/edit-address" element={<UserEditAddressPage />} />
           <Route path="/user/profile" element={<UserProfilePage />} />
+          <Route
+            path="/admin/editproduct/:id"
+            element={<AdminEditProductPage />}
+          />
         </Routes>
       </BrowserRouter>
       <Footer />
