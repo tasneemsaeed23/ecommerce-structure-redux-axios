@@ -8,7 +8,9 @@ import CardProductContainer from "./../../Component/Products/CardProductContaine
 import ViewSearchProductsHook from "../../hook/products/view-search-products-hook";
 
 const ShopProductsPage = () => {
-  const [items] = ViewSearchProductsHook();
+  const [items, pagination, onPress] = ViewSearchProductsHook();
+  if (pagination) var pageCount = pagination;
+  else pagination = 0;
   return (
     <div style={{ minHeight: "670px" }}>
       <CategoryHeader />
@@ -22,7 +24,7 @@ const ShopProductsPage = () => {
             <CardProductContainer title="" btntitle="" />
           </Col>
         </Row>
-        <Pagination />
+        <Pagination pageCount={pageCount} onPress={onPress} />
       </Container>
     </div>
   );
