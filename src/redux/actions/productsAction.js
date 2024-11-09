@@ -1,6 +1,7 @@
 import useDeleteData from "../../hooks/useDeleteData";
 import useGetData from "../../hooks/useGetData";
 import { useInsertDataWithImage } from "../../hooks/useInsertData";
+import { useUpdateDataWithImage } from "../../hooks/useUpdateData";
 import {
   CREATE_PRODUCTS,
   GET_ERROR,
@@ -8,6 +9,7 @@ import {
   GET_PRODUCT_DETALIS,
   GET_PRODUCT_LIKE,
   DELETE_PRODUCTS,
+  UPDATE_PRODUCTS,
 } from "../type";
 
 //create Product with pagination
@@ -104,6 +106,26 @@ export const deleteProducts = (id) => async (dispatch) => {
     const response = await useDeleteData(`/api/v1/products/${id}`);
     dispatch({
       type: DELETE_PRODUCTS,
+      payload: response,
+      loading: true,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_ERROR,
+      payload: "Error " + e,
+    });
+  }
+};
+
+//update product with id
+export const updateProducts = (id, data) => async (dispatch) => {
+  try {
+    const response = await useUpdateDataWithImage(
+      `/api/v1/products/${id}`,
+      data
+    );
+    dispatch({
+      type: UPDATE_PRODUCTS,
       payload: response,
       loading: true,
     });
