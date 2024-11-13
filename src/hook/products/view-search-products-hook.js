@@ -1,27 +1,34 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../../redux/actions/productsAction";
+import { getAllProductsSearch } from "../../redux/actions/productsAction";
 import { getAllProductsPage } from "./../../redux/actions/productsAction";
 
 const ViewSearchProductsHook = () => {
+  let limit = 6;
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllProducts(12));
-  }, []);
+
+  const getProduct = async () => {
+    await dispatch(getAllProductsSearch(`limit=${limit}`));
+  };
+  useEffect(() => {}, []);
 
   const allProducts = useSelector((state) => state.allproducts.allProducts);
 
   let items = [];
-  if (allProducts.data) items = allProducts.data;
-  else items = [];
-
   let pagination = [];
-  if (allProducts.paginationResult)
-    pagination = allProducts.paginationResult.numberOfPages;
-  else pagination = [];
+  try {
+    if (allProducts.data) items = allProducts.data;
+    else items = [];
+  } catch (e) {}
+
+  try {
+    if (allProducts.paginationResult)
+      pagination = allProducts.paginationResult.numberOfPages;
+    else pagination = [];
+  } catch (e) {}
 
   const onPress = async (page) => {
-    await dispatch(getAllProductsPage(page, 12));
+    await dispatch(getAllProductsPage(page, limit));
   };
 
   return [items, pagination, onPress];
