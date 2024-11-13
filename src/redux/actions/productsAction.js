@@ -136,3 +136,20 @@ export const updateProducts = (id, data) => async (dispatch) => {
     });
   }
 };
+
+//get all products with quary string
+export const getAllProductsSearch = (queryString) => async (dispatch) => {
+  try {
+    const response = await useGetData(`/api/v1/products?${queryString}`);
+    dispatch({
+      type: GET_ALL_PRODUCTS,
+      payload: response,
+      loading: true,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_ERROR,
+      payload: "Error " + e,
+    });
+  }
+};
