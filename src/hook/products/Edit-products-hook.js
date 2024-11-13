@@ -149,6 +149,16 @@ const AdminEditProductsHook = (id) => {
     return new File([u8arr], filename, { type: mime });
   }
 
+  //convert url to file
+  const convertURLtoFile = async (url) => {
+    const response = await fetch(url, { mode: "cors" });
+    const data = await response.blob();
+    const ext = url.split(".").pop();
+    const filename = url.split("/").pop();
+    const metadata = { type: `image/${ext}` };
+    return new File([data], Math.random(), metadata);
+  };
+
   //to save data
   const handelSubmit = async (e) => {
     e.preventDefault();
@@ -163,31 +173,43 @@ const AdminEditProductsHook = (id) => {
       return;
     }
 
-    //convert base 64 image to file
-    const imgCover = dataURLtoFile(images[0], Math.random() + ".png");
+    let imgCover;
+    if (images[0].length <= 1000) {
+      convertURLtoFile(images[0]).then((val) => (imgCover = val));
+    } else {
+      imgCover = dataURLtoFile(images[0], Math.random() + ".png");
+    }
+
+    const itemImages = [];
     //convert array of base 64 image to file
-    const itemImages = Array.from(Array(Object.keys(images).length).keys()).map(
-      (item, index) => {
-        return dataURLtoFile(images[index], Math.random() + ".png");
+    Array.from(Array(Object.keys(images).length).keys()).map((item, index) => {
+      if (images[0].length <= 1000) {
+        convertURLtoFile(images[index]).then((val) => itemImages.push(val));
+      } else {
+        itemImages.push(dataURLtoFile(images[index], Math.random() + ".png"));
       }
-    );
+    });
 
     const formData = new FormData();
     formData.append("title", prodName);
     formData.append("description", prodDescription);
     formData.append("quantity", qty);
     formData.append("price", priceBefore);
-    formData.append("imageCover", imgCover);
     formData.append("category", CatID);
     formData.append("brand", BrandID);
-    itemImages.map((item) => formData.append("images", item));
 
+    setTimeout(() => {
+      formData.append("imageCover", imgCover);
+      itemImages.map((item) => formData.append("images", item));
+    }, 1000);
     colors.map((color) => formData.append("availableColors", color));
     seletedSubID.map((item) => formData.append("subcategory", item._id));
 
-    setLoading(true);
-    await dispatch(createProduct(formData));
-    setLoading(false);
+    setTimeout(async () => {
+      setLoading(true);
+      await dispatch(createProduct(id, formData));
+      setLoading(false);
+    }, 1000);
   };
 
   //get create meesage
