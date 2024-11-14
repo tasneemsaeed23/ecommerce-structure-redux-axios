@@ -1,21 +1,24 @@
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
+
 import { ToastContainer } from "react-toastify";
-import useAddSubcategory from "../../hook/subcategory/add-subcategory-hook";
+import AddSubcategoryHook from "./../../hook/subcategory/add-subcategory-hook";
 
 const AdminAddSubCategory = () => {
-  const {
+  const [
     id,
     name,
     loading,
     category,
-    handleSubmit,
-    handlechange,
+    subcategory,
+    handelChange,
+    handelSubmit,
     onChangeName,
-  } = useAddSubcategory();
+  ] = AddSubcategoryHook();
 
   return (
     <div>
-      <Row className="justify-content-start">
+      <Row className="justify-content-start ">
         <div className="admin-content-text pb-4">اضافه تصنيف فرعي جديد</div>
         <Col sm="8">
           <input
@@ -28,27 +31,26 @@ const AdminAddSubCategory = () => {
           <select
             name="category"
             id="cat"
-            className="select mt-3 px-2"
-            onChange={handlechange}
-            value={id}
+            className="select mt-3 px-2 "
+            onChange={handelChange}
           >
             <option value="0">اختر تصنيف رئيسي</option>
-            {category?.data?.map((item) => (
-              <option key={item._id} value={item._id}>
-                {item.label}
-              </option>
-            ))}
+            {category.data
+              ? category.data.map((item) => {
+                  return (
+                    <option key={item._id} value={item._id}>
+                      {item.name}
+                    </option>
+                  );
+                })
+              : null}
           </select>
         </Col>
       </Row>
       <Row>
-        <Col sm="8" className="d-flex justify-content-end">
-          <button
-            onClick={handleSubmit}
-            className="btn-save d-inline mt-2"
-            disabled={loading}
-          >
-            {loading ? "جاري الحفظ..." : "حفظ التعديلات"}
+        <Col sm="8" className="d-flex justify-content-end ">
+          <button onClick={handelSubmit} className="btn-save d-inline mt-2 ">
+            حفظ التعديلات
           </button>
         </Col>
       </Row>
