@@ -97,6 +97,7 @@ const AdminAddProductsHook = () => {
     if (CatID !== 0) {
       if (subCat.data) {
         setOptions(subCat.data);
+        console.log("Options:", subCat.data);
       }
     }
   }, [CatID]);
