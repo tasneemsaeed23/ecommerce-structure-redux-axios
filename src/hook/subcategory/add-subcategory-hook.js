@@ -1,86 +1,92 @@
+import React, { useEffect, useState } from "react";
+import { createSubCategory } from "../../redux/actions/subcategoryAction";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllCategory } from "./../../redux/actions/categoryAction";
-import notify from "./../../hook/useNotifaction";
-import { creatSubCategory } from "../../redux/actions/subcategoryAction";
-import { useEffect, useState } from "react";
+import notify from "../../hook/useNotifaction";
+import { getAllCategory } from "../../redux/actions/categoryAction";
 
-const useAddSubcategory = () => {
+const AddSubcategoryHook = () => {
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (!navigator.onLine) {
-      notify("هناك مشكلة في الاتصال بالانترنت", "warn");
+      notify("هناك مشكله فى الاتصال بالانترنت", "warn");
       return;
     }
     dispatch(getAllCategory());
-  }, [dispatch]);
-
-  const [id, setId] = useState("0");
+  }, []);
+  const [id, setID] = useState("0");
   const [name, setName] = useState("");
-  const [loading, setLoading] = useState(false); // set initial state to false
-
+  const [loading, setLoading] = useState(true);
+  //get last catgeory state from redux
   const category = useSelector((state) => state.allCategory.category);
+
+  //get last sub catgeory state from redux
   const subcategory = useSelector((state) => state.subCategory.subcategory);
 
-  const onChangeName = (e) => {
-    setName(e.target.value);
+  //on change dropdown menu
+  const handelChange = (e) => {
+    console.log(e.target.value);
+    setID(e.target.value);
   };
 
-  // Save data
-  const handleSubmit = async (e) => {
+  //to save name
+  const onChangeName = (e) => {
+    e.persist();
+    setName(e.target.value);
+  };
+  //on save data
+  const handelSubmit = async (e) => {
     e.preventDefault();
-
     if (!navigator.onLine) {
-      notify("هناك مشكلة في الاتصال بالانترنت", "warn");
+      notify("هناك مشكله فى الاتصال بالانترنت", "warn");
       return;
     }
-
     if (id === "0") {
       notify("من فضلك اختر تصنيف رئيسي", "warn");
       return;
     }
-
-    if (!name.trim()) {
+    if (name === "") {
       notify("من فضلك ادخل اسم التصنيف", "warn");
       return;
     }
 
     setLoading(true);
-    await dispatch(creatSubCategory({ name, category: id }));
+    await dispatch(
+      createSubCategory({
+        name,
+        category: id,
+      })
+    );
     setLoading(false);
   };
-
-  // Change dropdown menu
-  const handlechange = (e) => {
-    setId(e.target.value);
-  };
-
   useEffect(() => {
-    if (!loading && subcategory) {
+    if (loading === false) {
       setName("");
-      setId("0");
-
+      setID("0");
+      if (subcategory) console.log(subcategory);
       if (subcategory.status === 201) {
-        notify("تم اضافه التصنيف بنجاح", "success");
+        notify("تمت الاضافة بنجاح", "success");
       } else if (
         subcategory === "Error Error: Request failed with status code 400"
       ) {
         notify("هذا الاسم مكرر من فضلك اختر اسم اخر", "warn");
       } else {
-        notify("هناك مشكلة في عمليه الاضافة", "warn");
+        notify("هناك مشكله فى عملية الاضافة", "warn");
       }
-    }
-  }, [loading, subcategory]);
 
-  return {
+      setLoading(true);
+    }
+  }, [loading]);
+
+  return [
     id,
     name,
     loading,
     category,
-    handleSubmit,
-    handlechange,
+    subcategory,
+    handelChange,
+    handelSubmit,
     onChangeName,
-  };
+  ];
 };
 
-export default useAddSubcategory;
+export default AddSubcategoryHook;
