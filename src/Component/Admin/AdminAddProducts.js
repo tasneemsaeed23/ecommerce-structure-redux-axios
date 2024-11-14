@@ -107,7 +107,7 @@ const AdminAddProducts = () => {
           <Multiselect
             className="mt-2 text-end"
             placeholder="التصنيف الفرعي"
-            options={options}
+            options={Array.isArray(options) ? options : []} // تأكيد Array
             onSelect={onSelect}
             onRemove={onRemove}
             displayValue="name"
