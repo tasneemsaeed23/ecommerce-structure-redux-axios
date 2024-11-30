@@ -36,9 +36,10 @@ export const createProduct = (formatData) => async (dispatch) => {
 export const getAllProducts = (limit) => async (dispatch) => {
   try {
     const response = await useGetData(`/api/v1/products?limit=${limit}`);
+    console.log("API Response:", response);
     dispatch({
       type: GET_ALL_PRODUCTS,
-      payload: response,
+      payload: response.data,
       loading: true,
     });
   } catch (e) {

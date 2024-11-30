@@ -6,6 +6,10 @@ import cart from "../../images/cart.png";
 import NavbarSearchHook from "../../hook/Search/navbar-search-hook";
 const NavBarLogin = () => {
   const [OnChangeSearch, searchWord] = NavbarSearchHook();
+  let word = "";
+  if (localStorage.setItem("searchWord") != null) {
+    word = localStorage.getItem("searchWord");
+  }
   return (
     <Navbar className="sticky-top" bg="dark" variant="dark" expand="sm">
       <Container>
@@ -17,7 +21,7 @@ const NavBarLogin = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <FormControl
-            value={searchWord}
+            value={word}
             onChange={OnChangeSearch}
             type="search"
             placeholder="ابحث..."

@@ -1,10 +1,8 @@
 import React from "react";
 import { Card, Col } from "react-bootstrap";
-import prod1 from "../../images/prod1.png";
 import favoff from "../../images/fav-off.png";
 import rate from "../../images/rate.png";
 import { Link } from "react-router-dom";
-
 const ProductCard = ({ item }) => {
   return (
     <Col xs="6" sm="6" md="4" lg="3" className="d-flex">
@@ -38,7 +36,7 @@ const ProductCard = ({ item }) => {
         </div>
         <Card.Body>
           <Card.Title>
-            <div className="card-title">{item.title} </div>
+            <div className="card-title">{item.title}</div>
           </Card.Title>
           <Card.Text>
             <div className="d-flex justify-content-between ">

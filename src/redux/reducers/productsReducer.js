@@ -54,12 +54,14 @@ const productsReducer = (state = inital, action) => {
       };
     case GET_ALL_PRODUCTS:
       return {
-        oneProduct: action.payload,
+        ...state,
+        allProducts: action.payload,
         loading: false,
       };
 
     case GET_ERROR:
       return {
+        ...state,
         loading: false,
         products: action.payload,
       };

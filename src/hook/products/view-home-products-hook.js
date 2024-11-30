@@ -6,16 +6,15 @@ const ViewHomeProductsHook = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllProducts());
+    dispatch(getAllProducts(2));
   }, [dispatch]);
 
-  const allProducts = useSelector((state) => state.allProducts?.allProducts);
+  const allProducts = useSelector((state) => state.allproducts?.allProducts);
+  console.log("All Products:", allProducts);
 
   let items = [];
-  if (allProducts && allProducts.data) {
-    items = allProducts.data.slice(0, 4);
-  } else {
-    items = [];
+  if (allProducts && allProducts.length > 0) {
+    items = allProducts.slice(0, 4);
   }
 
   return [items];
