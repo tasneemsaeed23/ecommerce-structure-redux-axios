@@ -79,7 +79,25 @@ const SidebarSearchHook = () => {
     }
   };
 
-  return [category, brand, clickCategory, clickBrand];
+  const [From, setPriceFrom] = useState(0);
+  const [To, setPriceTo] = useState(0);
+
+  const priceFrom = (e) => {
+    localStorage.setItem("priceFrom", e.target.value);
+    setPriceFrom(e.target.value);
+  };
+
+  const priceTo = (e) => {
+    localStorage.setItem("priceTo", e.target.value);
+    setPriceTo(e.target.value);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      getProduct();
+    }, 1000);
+  }, [From, To]);
+  return [category, brand, clickCategory, clickBrand, priceFrom, priceTo];
 };
 
 export default SidebarSearchHook;
