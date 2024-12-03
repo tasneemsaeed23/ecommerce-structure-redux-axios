@@ -13,9 +13,22 @@ const ViewSearchProductsHook = () => {
   const getProduct = async () => {
     getStorge();
     sortData();
+    let pricefromString = "";
+    if (priceFrom === "" || priceFrom <= 0) {
+      pricefromString = "";
+    } else {
+      pricefromString = `&price[gt]=${priceFrom}`;
+    }
+
+    let priceToString = "";
+    if (priceTo === "" || priceTo <= 0) {
+      priceToString = "";
+    } else {
+      priceToString = `&price[lte]=${priceTo}`;
+    }
     await dispatch(
       getAllProductsSearch(
-        `sort=${sort}limit=${limit}&keyword=${word}&${brandCat}`
+        `sort=${sort}limit=${limit}&keyword=${word}&${brandCat}${pricefromString}${priceToString}`
       )
     );
   };
@@ -49,14 +62,18 @@ const ViewSearchProductsHook = () => {
     sortData();
     await dispatch(
       getAllProductsPage(
-        `sort=${sort}limit=${limit}&page=${page}&keyword=${word}&${queryCat}&${brandCat}`
+        `sort=${sort}limit=${limit}&page=${page}&keyword=${word}&${queryCat}&${brandCat}${pricefromString}${priceToString}`
       )
     );
   };
 
   let word = "",
     queryCat = "",
-    brandCat = "";
+    brandCat = "",
+    priceTo = "",
+    priceFrom = "";
+  let pricefromString = "",
+    priceToString = "";
   const getStorge = () => {
     if (localStorage.getItem("searchWord") != null)
       word = localStorage.getItem("searchWord");
@@ -64,6 +81,22 @@ const ViewSearchProductsHook = () => {
       queryCat = localStorage.getItem("catChecked");
     if (localStorage.setItem("brandChecked") != null)
       brandCat = localStorage.getItem("brandChecked");
+    if (localStorage.setItem("priceTo") != null)
+      priceTo = localStorage.getItem("priceTo");
+    if (localStorage.setItem("priceFrom") != null)
+      priceFrom = localStorage.getItem("priceFrom");
+
+    if (priceFrom === "" || priceFrom <= 0) {
+      pricefromString = "";
+    } else {
+      pricefromString = `&price[gt]=${priceFrom}`;
+    }
+
+    if (priceTo === "" || priceTo <= 0) {
+      priceToString = "";
+    } else {
+      priceToString = `&price[lte]=${priceTo}`;
+    }
   };
 
   let sortType = "",
