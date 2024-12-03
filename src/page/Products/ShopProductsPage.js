@@ -12,6 +12,7 @@ const ShopProductsPage = () => {
     ViewSearchProductsHook();
 
   const pageCount = pagination || 0;
+  const itemCount = items.length || 0; // Ensure items.length is available
 
   return (
     <div style={{ minHeight: "670px" }}>
@@ -19,17 +20,24 @@ const ShopProductsPage = () => {
       <Container>
         <SearchCountResult
           onClick={getProduct}
-          title={`هناك ${items.length} نتيجة بحث`}
+          title={`هناك ${itemCount} نتيجة بحث`}
         />
         <Row className="d-flex flex-row">
-          <Col sm="2" xs="2" md="1" className="d-flex">
+          <Col sm="12" xs="12" md="3" className="d-flex">
+            {" "}
+            {/* Updated for better responsiveness */}
             <SideFilter />
           </Col>
-          <Col sm="10" xs="10" md="11">
+          <Col sm="12" xs="12" md="9">
+            {" "}
+            {/* Adjusted for responsive design */}
             <CardProductsContainer products={items} title="" btntitle="" />
           </Col>
         </Row>
-        <Pagination pageCount={pageCount} onPress={onPress} />
+        {pageCount > 1 && (
+          <Pagination pageCount={pageCount} onPress={onPress} />
+        )}{" "}
+        {/* Added check for pagination */}
       </Container>
     </div>
   );
