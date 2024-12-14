@@ -24,6 +24,8 @@ import UserAddAddressPage from "./page/User/UserAddAddressPage";
 import UserEditAddressPage from "./page/User/UserEditAddressPage";
 import UserProfilePage from "./page/User/UserProfilePage";
 import AdminEditProductPage from "./page/Admin/AdminEditProductPage";
+import ForgetPasswordPage from "./page/Auth/forgetPasswordPage";
+
 function App() {
   return (
     <div className="font">
@@ -63,6 +65,10 @@ function App() {
           <Route
             path="/admin/editproduct/:id"
             element={<AdminEditProductPage />}
+          />
+          <Route
+            path="/user/forget-password"
+            element={<ForgetPasswordPage />}
           />
         </Routes>
       </BrowserRouter>
