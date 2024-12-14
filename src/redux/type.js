@@ -18,3 +18,6 @@ export const DELETE_PRODUCTS = "DELETE_PRODUCTS";
 export const UPDATE_PRODUCTS = "UPDATE_PRODUCTS";
 
 export const CREATE_NEW_USER = "CREATE_NEW_USER";
+
+export const LOGIN_USER = "LOGIN_USER";
+export const GET_CURERNT_USER = "GET_CURERNT_USER";
