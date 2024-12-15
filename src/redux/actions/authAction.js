@@ -1,12 +1,17 @@
 import {
   CREATE_NEW_USER,
-  LOGIN_USER,
-  GET_CURERNT_USER,
+  RESET_PASSWORD,
+  VERIFY_PASSWORD,
   FOREGT_PASSWORD,
+  GET_CURERNT_USER,
+  LOGIN_USER,
 } from "../type";
-import { useInsertData } from "../../hooks/useInsertData";
-import { useGetDataToken } from "../../hooks/useGetData";
 
+import { useInsertData } from "../../hooks/useInsertData";
+import { useGetDataToken } from "./../../hooks/useGetData";
+import { useInsUpdateData } from "../../hooks/useUpdateData";
+
+//create new user
 export const createNewUser = (data) => async (dispatch) => {
   try {
     const response = await useInsertData(`/api/v1/auth/signup`, data);
@@ -69,6 +74,40 @@ export const forgetPassword = (data) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: FOREGT_PASSWORD,
+      payload: e.response,
+    });
+  }
+};
+
+//2-verify  passwrod
+export const verifyPassword = (data) => async (dispatch) => {
+  try {
+    const response = await useInsertData(`/api/v1/auth/verifyResetCode`, data);
+    dispatch({
+      type: VERIFY_PASSWORD,
+      payload: response,
+      loading: true,
+    });
+  } catch (e) {
+    dispatch({
+      type: VERIFY_PASSWORD,
+      payload: e.response,
+    });
+  }
+};
+
+//2-reset  passwrod
+export const resetPassword = (data) => async (dispatch) => {
+  try {
+    const response = await useInsUpdateData(`/api/v1/auth/resetPassword`, data);
+    dispatch({
+      type: RESET_PASSWORD,
+      payload: response,
+      loading: true,
+    });
+  } catch (e) {
+    dispatch({
+      type: RESET_PASSWORD,
       payload: e.response,
     });
   }
